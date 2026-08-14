@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+<html data-theme="light" dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="مستندات رهسپار؛ ابزار سبک و Cross-platform برای Build، FTP Upload، Deploy، Health Check و Rollback روی cPanel." name="description"/>
+<meta content="#f8fafc" name="theme-color"/>
+<title>رهسپار — مستندات</title>
+<link href="assets/styles.css" rel="stylesheet"/>
+</head>
+<body><a class="skip-link" href="#content">رفتن به محتوای اصلی</a>
+<div aria-hidden="true" class="noise"></div>
+<header class="topbar">
+<button aria-label="باز کردن منو" class="icon-btn mobile-only" id="menuToggle">
+        ☰
+      </button>
+<a aria-label="رهسپار" class="brand" href="#overview">
+<span class="brand-mark">ر</span>
+<span><b>رهسپار</b><small>Rahsepar Docs</small></span>
+</a>
+<div class="top-actions">
+<button class="search-trigger" id="searchTrigger">
+<span>جست‌وجو در مستندات</span><kbd>/</kbd>
+</button>
+<button aria-label="تغییر پوسته" class="icon-btn" id="themeToggle">
+          ◐
+        </button>
+<a class="button ghost desktop-only" download="" href="downloads/config.example.json">نمونه کانفیگ</a>
+<a class="button primary desktop-only" href="#downloads">دانلود فایل‌ها</a></div>
+</header>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-scroll">
+<div class="side-section">
+<div class="side-title">شروع</div>
+<a href="#overview">معرفی</a><a href="#quick-start">شروع سریع</a><a href="#quick-run">اجرای سریع</a>
+<a href="#how-it-works">رهسپار چطور کار می‌کند؟</a>
+</div>
+<div class="side-section">
+<div class="side-title">راه‌اندازی</div>
+<a href="#server-setup">راه‌اندازی هاست</a><a href="#linux">Linux / macOS</a><a href="#windows">Windows</a><a href="#configuration">config.json</a><a href="#environment">متغیرهای محیطی</a>
+</div>
+<div class="side-section">
+<div class="side-title">استفاده</div>
+<a href="#commands">دستورها و فلگ‌ها</a><a href="#deploy-flow">چرخه Deploy</a><a href="#watch-mode">Watch Mode</a><a href="#rollback">Rollback</a><a href="#logs">لاگ‌ها</a>
+</div>
+<div class="side-section">
+<div class="side-title">مرجع فنی</div>
+<a href="#server-api">API سمت سرور</a><a href="#states">Stateها</a><a href="#storage">فایل‌های داخلی</a><a href="#security">امنیت</a><a href="#exit-codes">Exit Codeها</a><a href="#troubleshooting">عیب‌یابی</a>
+</div>
+<div class="side-footer">رهسپار · نسخه مستندات 1.0</div>
+</div>
+</aside>
+<main class="content" id="content">
+<section class="hero doc-section" data-title="معرفی" id="overview">
+<div class="hero-grid">
+<div class="hero-copy">
+<div class="eyebrow"><span class="dot"></span><span>Cross-platform cPanel deployer</span><span class="eyebrow-sep">/</span><span>Docs v1.0</span></div>
+<div class="hero-brandline">
+<div aria-hidden="true" class="hero-monogram">ر</div>
+<div>
+<div class="hero-product">Rahsepar</div>
+<div class="hero-product-fa">رهسپار</div>
+</div>
+</div>
+<h1 class="hero-title">استقرار روی cPanel،<br/><span>ساده، قابل‌تکرار و کنترل‌شده.</span></h1>
+<p class="lead">رهسپار جریان Build، ساخت Archive، آپلود FTP، انتشار سمت سرور، Health Check و Rollback را در یک ابزار سبک برای Linux، macOS و Windows جمع می‌کند.</p>
+<div class="hero-actions">
+<a class="button primary" href="#quick-start">شروع سریع</a>
+<a class="button ghost" href="#downloads">دانلود فایل‌ها</a>
+</div>
+<div aria-label="ویژگی‌های اصلی" class="hero-facts">
+<span>بدون سرویس واسط</span>
+<span>FTP + SHA-256</span>
+<span>Health Check</span>
+<span>Rollback</span>
+</div>
+</div>
+<div class="hero-visual-stack">
+<div aria-label="نمونه اجرای رهسپار" class="terminal-card">
+<div class="terminal-head">
+<div aria-hidden="true" class="terminal-lamps"><span class="lamp red"></span><span class="lamp yellow"></span><span class="lamp green"></span></div>
+<span class="terminal-title">rahsepar deploy</span>
+<span class="terminal-status">production</span>
+</div>
+<div class="terminal-command"><span>$</span> ./rahsepar.sh</div>
+<div aria-live="polite" class="terminal-live" id="terminalLive"></div>
+</div>
+<div class="hero-flow-card">
+<div class="hero-flow-head"><span>Deploy pipeline</span><b>6 stages</b></div>
+<div aria-hidden="true" class="hero-flow-steps">
+<span>Build</span><i></i><span>Pack</span><i></i><span>Upload</span><i></i><span>Publish</span><i></i><span>Verify</span><i></i><span>Done</span>
+</div>
+<p>از کد محلی تا نسخه‌ی سالم روی هاست، با مسیر مشخص و قابل بررسی.</p>
+</div>
+</div>
+</div>
+<div aria-label="مسیر پیشنهادی مطالعه" class="hero-index">
+<a href="#quick-start"><b>01</b><span>شروع سریع<small>اولین Deploy در چند دقیقه</small></span></a>
+<a href="#configuration"><b>02</b><span>پیکربندی<small>تنظیم پروژه، FTP و Health</small></span></a>
+<a href="#deploy-flow"><b>03</b><span>چرخه Deploy<small>رفتار مرحله‌به‌مرحله ابزار</small></span></a>
+<a href="#troubleshooting"><b>04</b><span>عیب‌یابی<small>خطاهای رایج و راه‌حل‌ها</small></span></a>
+</div>
+</section>
+<section class="doc-section" data-title="شروع سریع" id="quick-start">
+<div class="section-kicker">Quick Start</div>
+<h2>شروع سریع</h2>
+<p>
+            برای اولین Deploy فقط این مسیر را برو. جزئیات فنی را فعلاً لازم نیست
+            بخوانی.
+          </p>
+<div class="steps">
+<article class="step-card">
+<span>01</span>
+<div>
+<h3>فایل سرور را روی هاست بگذار</h3>
+<p>
+<code>extract.php</code> را در همان مسیری قرار بده که خروجی
+                  سایت قرار است منتشر شود. یعنی اگر سایت تو در دایرکتوری
+                  <code>public_html</code> قرار دارد، فایل را مستقیما در همانجا
+                  آپلود کن، توجه داشته باش که مستقیما در روت(ریشه) هاست فایل را
+                  قرار بده.
+                </p>
+</div>
+</article>
+<article class="step-card">
+<span>02</span>
+<div>
+<h3>توکن سرور را بساز</h3>
+<p>
+                  کنار <code>extract.php</code> فایلی با نام
+                  <code>.deploy-token</code> ایجاد کن و Token زیر را داخل آن
+                  قرار بده.
+                </p>
+<div class="deploy-token-generator">
+<div class="deploy-token-head">
+<div class="deploy-token-head-title">
+<span class="deploy-token-icon">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="16">
+<circle cx="7.5" cy="15.5" r="3.5"></circle>
+<path d="M10 13l9-9"></path>
+<path d="M15 8l2 2"></path>
+<path d="M17 6l2 2"></path>
+</svg>
+</span>
+<span>Deploy Token</span>
+</div>
+<span class="deploy-token-status">
+<i></i>
+                      Secure
+                    </span>
+</div>
+<div class="deploy-token-field">
+<code id="deployToken"></code>
+<button aria-label="کپی توکن" class="deploy-token-copy" id="deployTokenCopy" title="کپی توکن" type="button">
+<svg fill="none" height="17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="17">
+<rect height="11" rx="2" width="11" x="9" y="9"></rect>
+<path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path>
+</svg>
+<span>کپی</span>
+</button>
+</div>
+<div class="deploy-token-footer">
+<span>64 کاراکتر تصادفی</span>
+<button class="deploy-token-regenerate" id="deployTokenRegenerate" type="button">
+<svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="15">
+<path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
+<path d="M20 4v7h-7"></path>
+</svg>
+
+                      ساخت توکن جدید
+                    </button>
+</div>
+</div>
+</div>
+</article>
+<article class="step-card">
+<span>03</span>
+<div>
+<h3>کانفیگ را آماده کن</h3>
+<p>
+<code>config.example.json</code> را به
+                  <code>config.json</code> تبدیل و اطلاعات پروژه و FTP را وارد
+                  کن. اگر این فایل را نداشتی، بعد از اجرای اسکریپت برای اولین بار در صورت وجود نداشتن این فایل خود اسکریپت به صورت ورودی اطلاعات را از شما دریافت خواهد کرد و سپس فایل <code>config.json</code> توسط خود اسکریپت ساخته خواهد شد.
+                </p>
+</div>
+</article>
+<article class="step-card">
+<span>04</span>
+<div>
+<h3>Dry Run بگیر</h3>
+<p>
+                  قبل از Deploy واقعی، کانفیگ و Dependencyها را اعتبارسنجی کن.
+                </p>
+</div>
+</article>
+<article class="step-card">
+<span>05</span>
+<div>
+<h3>Deploy کن</h3>
+<p>
+                  رهسپار Build، Package، Upload، Publish، Health Check و Cleanup
+                  را پشت سر هم انجام می‌دهد.
+                </p>
+</div>
+</article>
+</div>
+</section>
+<section class="doc-section" data-title="اجرای سریع" id="quick-run">
+<div class="section-kicker">Quick Run</div>
+<h2>اجرای سریع</h2>
+<div class="split">
+<div class="code-card">
+<div class="code-head">
+<span>Linux / macOS</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>chmod +x rahsepar.sh
+./rahsepar.sh --dry-run
+./rahsepar.sh</code></pre>
+</div>
+<div class="code-card">
+<div class="code-head">
+<span>Windows</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>.\rahsepar.cmd --dry-run
+.\rahsepar.cmd</code></pre>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section><section class="doc-section" data-title="رهسپار چطور کار می‌کند؟" id="how-it-works">
+<div class="section-kicker">Architecture</div>
+<h2>رهسپار چطور کار می‌کند؟</h2>
+<p>
+            کلاینت و سرور دو نقش جدا دارند. کلاینت فایل Release را می‌سازد و
+            می‌فرستد؛ <code>extract.php</code> روی هاست، صحت فایل را بررسی و
+            Release را امن‌تر Publish می‌کند.
+          </p>
+<div class="flow">
+<div class="flow-node">
+<b>1</b><span>Build</span><small>اجرای BuildCommand</small>
+</div>
+<i>←</i>
+<div class="flow-node">
+<b>2</b><span>Package</span><small>ZIP + SHA‑256</small>
+</div>
+<i>←</i>
+<div class="flow-node">
+<b>3</b><span>Upload</span><small>FTP</small>
+</div>
+<i>←</i>
+<div class="flow-node">
+<b>4</b><span>Publish</span><small>Staging + Backup</small>
+</div>
+<i>←</i>
+<div class="flow-node">
+<b>5</b><span>Verify</span><small>Health Check</small>
+</div>
+<i>←</i>
+<div class="flow-node">
+<b>6</b><span>Cleanup</span><small>Archive + Metadata</small>
+</div>
+</div>
+<div class="note">
+<b>نکته:</b> آپلود رهسپار عمداً با FTP معمولی انجام می‌شود تا با
+            هاست‌های cPanel بیشتری سازگار باشد. API مربوط به
+            <code>extract.php</code> در حالت Production بهتر است روی HTTPS باشد.
+          </div>
+</section><section class="doc-section" data-title="راه‌اندازی هاست" id="server-setup">
+<div class="section-kicker">Server Setup</div>
+<h2>راه‌اندازی هاست</h2>
+<div class="requirements">
+<div><span>PHP</span><b>8.0+</b></div>
+<div><span>Extension</span><b>ZipArchive</b></div>
+<div><span>Permission</span><b>Writable Root</b></div>
+<div><span>Auth</span><b>.deploy-token</b></div>
+</div>
+<h3>۱. آپلود فایل سرور</h3>
+<p>
+<code>extract.php</code> را در ریشه‌ی مقصد Deploy قرار بده. اسکریپت
+            هنگام اجرا پوشه‌های داخلی خودش را می‌سازد.
+          </p>
+<h3>۲. ایجاد Token</h3>
+<div class="code-card">
+<div class="code-head">
+<span>روی هاست</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code># file: .deploy-token
+YOUR_LONG_RANDOM_SECRET</code></pre>
+</div>
+<p>
+            کلاینت Token را با Header به نام
+            <code>X-Deploy-Token</code> می‌فرستد. اگر فایل Token وجود نداشته
+            باشد یا خالی باشد، API با خطای
+            <code>TOKEN_NOT_CONFIGURED</code> پاسخ می‌دهد.
+          </p>
+<h3>۳. Health خود API</h3>
+<p>
+            Action <code>health</code> وضعیت PHP، ZipArchive، writable بودن ریشه
+            و تنظیم بودن Token را بررسی می‌کند.
+          </p>
+<div class="code-card">
+<div class="code-head">
+<span>نمونه درخواست</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>curl -H "X-Deploy-Token: YOUR_TOKEN" \
+  "https://example.com/extract.php?action=health"</code></pre>
+</div>
+</section><section class="doc-section" data-title="Linux / macOS" id="linux">
+<div class="section-kicker">Linux / macOS</div>
+<h2>نصب و اجرا در Linux / macOS</h2>
+<p>
+            نسخه Shell به Bash، <code>jq</code>، <code>curl</code> و
+            <code>zip</code> نیاز دارد. برای Watch Mode در Linux به
+            <code>inotifywait</code> نیز نیاز است.
+          </p>
+<div class="code-card">
+<div class="code-head">
+<span>اجرا</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>chmod +x rahsepar.sh
+./rahsepar.sh --dry-run
+./rahsepar.sh</code></pre>
+</div>
+<div class="note subtle">
+            برای محاسبه Digest باید یکی از <code>sha256sum</code> یا
+            <code>shasum</code> روی سیستم موجود باشد.
+          </div>
+</section><section class="doc-section" data-title="Windows" id="windows">
+<div class="section-kicker">Windows</div>
+<h2>نصب و اجرا در Windows</h2>
+<p>
+            نسخه Windows با PowerShell 5.1+ یا PowerShell 7+ اجرا می‌شود و برای
+            انتقال فایل از <code>curl.exe</code> استفاده می‌کند. فایل
+            <code>rahsepar.cmd</code> ابتدا <code>pwsh.exe</code> و در صورت
+            نبودن آن <code>powershell.exe</code> را اجرا می‌کند.
+          </p>
+<div class="code-card">
+<div class="code-head">
+<span>اجرا</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>.\rahsepar.cmd --dry-run
+.\rahsepar.cmd</code></pre>
+</div>
+<p>
+            نسخه PowerShell برای ساخت ZIP از
+            <code>System.IO.Compression</code> استفاده می‌کند و از نظر مراحل
+            Deploy با نسخه Shell هم‌ساختار است.
+          </p>
+</section><section class="doc-section" data-title="config.json" id="configuration">
+<div class="section-kicker">Configuration</div>
+<h2>فایل config.json</h2>
+<p>
+            هر دو نسخه Linux و Windows از یک Schema مشترک استفاده می‌کنند. اگر
+            <code>ProjectRoot</code> نسبی باشد، نسبت به محل فایل کانفیگ Resolve
+            می‌شود.
+          </p>
+<div class="code-card">
+<div class="code-head">
+<span>config.json</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>{
+  "ProjectRoot": ".",
+  "BuildFolder": "dist",
+  "ZipFileName": "politest.ir.zip",
+  "FtpHost": "ftp.example.com",
+  "RemoteUser": "cpanel-user",
+  "FtpPassword": "",
+  "RemotePath": "public_html",
+  "ExtractScriptUrl": "https://example.com/extract.php",
+  "Token": "",
+  "HealthUrl": "https://example.com/",
+  "BuildCommand": "bun run build",
+  "UploadRetries": 3,
+  "RequestTimeoutSeconds": 300,
+  "HealthTimeoutSeconds": 20,
+  "StatusPollSeconds": 2,
+  "StatusTimeoutSeconds": 330,
+  "KeepLocalArchive": false,
+  "AllowInsecureHttp": false
+}</code></pre>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>کلید</th>
+<th>کاربرد</th>
+<th>پیش‌فرض</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProjectRoot</code></td>
+<td>ریشه پروژه محلی</td>
+<td><code>.</code></td>
+</tr>
+<tr>
+<td><code>BuildFolder</code></td>
+<td>پوشه خروجی Build</td>
+<td><code>dist</code></td>
+</tr>
+<tr>
+<td><code>ZipFileName</code></td>
+<td>نام Archive؛ اگر .zip نداشته باشد اضافه می‌شود</td>
+<td><code>politest.ir.zip</code></td>
+</tr>
+<tr>
+<td><code>FtpHost</code></td>
+<td>هاست FTP بدون prefix</td>
+<td>الزامی</td>
+</tr>
+<tr>
+<td><code>RemoteUser</code></td>
+<td>نام کاربری FTP</td>
+<td>الزامی</td>
+</tr>
+<tr>
+<td><code>FtpPassword</code></td>
+<td>رمز FTP؛ Environment Variable اولویت دارد</td>
+<td>الزامی</td>
+</tr>
+<tr>
+<td><code>RemotePath</code></td>
+<td>مسیر مقصد فایل ZIP روی FTP</td>
+<td><code>.</code></td>
+</tr>
+<tr>
+<td><code>ExtractScriptUrl</code></td>
+<td>URL فایل extract.php</td>
+<td>الزامی</td>
+</tr>
+<tr>
+<td><code>Token</code></td>
+<td>Token احراز هویت API</td>
+<td>الزامی</td>
+</tr>
+<tr>
+<td><code>HealthUrl</code></td>
+<td>URL برنامه برای بررسی پس از Deploy</td>
+<td>خالی = غیرفعال</td>
+</tr>
+<tr>
+<td><code>BuildCommand</code></td>
+<td>فرمان Build پروژه</td>
+<td><code>bun run build</code></td>
+</tr>
+<tr>
+<td><code>UploadRetries</code></td>
+<td>تعداد تلاش Upload</td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>RequestTimeoutSeconds</code></td>
+<td>Timeout درخواست API</td>
+<td>300</td>
+</tr>
+<tr>
+<td><code>HealthTimeoutSeconds</code></td>
+<td>Timeout Health Check برنامه</td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>StatusPollSeconds</code></td>
+<td>فاصله Poll کردن State</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>StatusTimeoutSeconds</code></td>
+<td>حداکثر زمان انتظار برای State نهایی</td>
+<td>330</td>
+</tr>
+<tr>
+<td><code>KeepLocalArchive</code></td>
+<td>نگه‌داشتن ZIP روی سیستم محلی</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>AllowInsecureHttp</code></td>
+<td>اجازه HTTP برای API در محیط قابل اعتماد توسعه</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section class="doc-section" data-title="متغیرهای محیطی" id="environment">
+<div class="section-kicker">Secrets</div>
+<h2>متغیرهای محیطی</h2>
+<p>
+            برای اینکه Password و Token داخل <code>config.json</code> ذخیره
+            نشوند، می‌توانی آن‌ها را با Environment Variable بدهی. این مقادیر بر
+            config اولویت دارند.
+          </p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>متغیر</th>
+<th>کاربرد</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEPLOY_FTP_PASSWORD</code></td>
+<td>رمز FTP</td>
+</tr>
+<tr>
+<td><code>DEPLOY_TOKEN</code></td>
+<td>Token فایل <code>.deploy-token</code></td>
+</tr>
+<tr>
+<td><code>DEPLOY_CONFIG</code></td>
+<td>مسیر config سفارشی در نسخه Shell/محیط</td>
+</tr>
+<tr>
+<td><code>DEBUG=1</code></td>
+<td>فعال کردن Debug Log</td>
+</tr>
+<tr>
+<td><code>NO_COLOR=1</code></td>
+<td>غیرفعال کردن رنگ‌های ترمینال</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section class="doc-section" data-title="دستورها و فلگ‌ها" id="commands">
+<div class="section-kicker">CLI</div>
+<h2>دستورها و فلگ‌ها</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>فلگ</th>
+<th>کاربرد</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--auto</code></td>
+<td>اگر config وجود نداشت به‌جای Prompt، Fail می‌کند</td>
+</tr>
+<tr>
+<td><code>--watch</code></td>
+<td>با تغییر فایل‌های پروژه Deploy جدید اجرا می‌کند</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>
+                    کانفیگ را Validate و نمایش می‌دهد؛ Deploy انجام نمی‌شود
+                  </td>
+</tr>
+<tr>
+<td><code>--rollback</code></td>
+<td>Rollback به Deploy ID یا آخرین Backup</td>
+</tr>
+<tr>
+<td><code>--deploy-id=&lt;id&gt;</code></td>
+<td>Deploy ID مورد استفاده برای Rollback</td>
+</tr>
+<tr>
+<td><code>--config=&lt;path&gt;</code></td>
+<td>استفاده از فایل config سفارشی</td>
+</tr>
+<tr>
+<td><code>--debug</code></td>
+<td>فعال کردن Diagnostic Log بدون نمایش Secretها</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section class="doc-section" data-title="چرخه Deploy" id="deploy-flow">
+<div class="section-kicker">Deploy Lifecycle</div>
+<h2>چرخه کامل Deploy</h2>
+<div class="timeline">
+<div>
+<span>01</span>
+<h3>Build</h3>
+<p>
+                خروجی قبلی حذف و <code>BuildCommand</code> اجرا می‌شود.
+                BuildFolder باید ایجاد و غیرخالی باشد.
+              </p>
+</div>
+<div>
+<span>02</span>
+<h3>Package</h3>
+<p>
+                محتویات BuildFolder در ZIP قرار می‌گیرند. سپس SHA‑256 فایل
+                محاسبه می‌شود.
+              </p>
+</div>
+<div>
+<span>03</span>
+<h3>FTP Upload</h3>
+<p>
+                Archive با <code>curl</code> به RemotePath فرستاده می‌شود.
+                Retryها Backoff ساده دارند.
+              </p>
+</div>
+<div>
+<span>04</span>
+<h3>Server Deploy</h3>
+<p>
+                کلاینت <code>extract</code> را با Deploy ID و SHA‑256 فراخوانی
+                می‌کند. سرور ZIP را Validate، در Staging Extract، از نسخه فعلی
+                Backup و سپس Release را Publish می‌کند.
+              </p>
+</div>
+<div>
+<span>05</span>
+<h3>Health Check</h3>
+<p>
+                اگر HealthUrl تنظیم شده باشد، کلاینت آن را با Timeout مشخص بررسی
+                می‌کند.
+              </p>
+</div>
+<div>
+<span>06</span>
+<h3>Cleanup</h3>
+<p>
+                Archive ریموت و Stagingهای قدیمی پاک می‌شوند، Backup/State
+                rotation انجام می‌شود و ZIP محلی بسته به تنظیم حذف یا نگه داشته
+                می‌شود.
+              </p>
+</div>
+</div>
+</section><section class="doc-section" data-title="Watch Mode" id="watch-mode">
+<div class="section-kicker">Developer Mode</div>
+<h2>Watch Mode</h2>
+<p>
+            Watch Mode برای توسعه مناسب است. با مشاهده‌ی تغییر فایل‌ها یک اجرای
+            Deploy جداگانه آغاز می‌شود.
+          </p>
+<div class="split">
+<div class="code-card">
+<div class="code-head">
+<span>Linux</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>./rahsepar.sh --watch</code></pre>
+</div>
+<div class="code-card">
+<div class="code-head">
+<span>Windows</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>.\rahsepar.cmd --watch</code></pre>
+</div>
+</div>
+<p>
+            نسخه Linux از <code>inotifywait</code> و نسخه Windows از
+            <code>FileSystemWatcher</code> استفاده می‌کند. مسیرهای Build،
+            <code>node_modules</code>، <code>.git</code> و داده‌های داخلی Deploy
+            از Watch کنار گذاشته می‌شوند.
+          </p>
+</section><section class="doc-section" data-title="Rollback" id="rollback">
+<div class="section-kicker">Recovery</div>
+<h2>Rollback</h2>
+<p>
+            رهسپار قبل از Publish از نسخه قبلی Backup می‌سازد. اگر Health Check
+            پس از Deploy Fail شود، کلاینت برای همان Deploy ID درخواست Rollback
+            می‌فرستد.
+          </p>
+<div class="split">
+<div class="code-card">
+<div class="code-head">
+<span>آخرین Backup</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>./rahsepar.sh --rollback
+.\rahsepar.cmd --rollback</code></pre>
+</div>
+<div class="code-card">
+<div class="code-head">
+<span>Deploy ID مشخص</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>./rahsepar.sh --rollback --deploy-id=YOUR_ID
+.\rahsepar.cmd --rollback --deploy-id=YOUR_ID</code></pre>
+</div>
+</div>
+<div class="note danger">
+<b>رفتار مهم:</b> اگر خود عملیات Remote Deploy بدون نتیجه قطعی Fail
+            شود، کلاینت Rollback کورکورانه انجام نمی‌دهد؛ چون ممکن است Release
+            اصلاً Publish نشده باشد. در این وضعیت باید State/Log سرور بررسی شود.
+          </div>
+</section><section class="doc-section" data-title="لاگ‌ها" id="logs">
+<div class="section-kicker">Observability</div>
+<h2>لاگ‌ها</h2>
+<p>
+            هر Run یک Log محلی مستقل می‌سازد. Secretها در خروجی کانفیگ Mask
+            می‌شوند و Debug Mode هم برای تشخیص جزئیات بیشتر وجود دارد.
+          </p>
+<div class="code-card">
+<div class="code-head">
+<span>نمونه خروجی</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>╭────────────────────────────────────────────────────────────╮
+│ 1/6 · Build                                                │
+╰────────────────────────────────────────────────────────────╯
+[20:17:31] ● INFO     Cleaning previous build output…
+[20:17:31] ● INFO     Running: bun run build
+[20:17:36] ✔ SUCCESS  Build completed in 5s.
+
+╭────────────────────────────────────────────────────────────╮
+│ 4/6 · Remote deployment                                    │
+╰────────────────────────────────────────────────────────────╯
+[20:17:44] ● INFO     Deploy ID: 5758fee9-...
+[20:17:47] ✔ SUCCESS  Server applied the release successfully.</code></pre>
+</div>
+<p>مسیر Log محلی:</p>
+<div class="inline-code">
+<code>&lt;ProjectRoot&gt;/.deploy/logs/deploy-&lt;run-id&gt;.log</code>
+</div>
+<p>
+            سمت سرور نیز رویدادها در <code>.deploy-server.log</code> ثبت و در
+            صورت بزرگ شدن Rotate می‌شوند.
+          </p>
+</section><section class="doc-section" data-title="API سمت سرور" id="server-api">
+<div class="section-kicker">Server API</div>
+<h2>API فایل extract.php</h2>
+<p>
+            نسخه فعلی API مقدار <code>api_version = 2.0</code> برمی‌گرداند. تمام
+            Actionها بعد از احراز هویت Token اجرا می‌شوند.
+          </p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Method</th>
+<th>کاربرد</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>health</code></td>
+<td>GET / POST</td>
+<td>بررسی نیازمندی‌های API</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>GET / POST</td>
+<td>خواندن State یک Deploy ID</td>
+</tr>
+<tr>
+<td><code>backup</code></td>
+<td>POST</td>
+<td>ایجاد Backup دستی</td>
+</tr>
+<tr>
+<td><code>extract</code></td>
+<td>POST</td>
+<td>Validate + Stage + Backup + Publish Release</td>
+</tr>
+<tr>
+<td><code>restore</code></td>
+<td>POST</td>
+<td>بازگردانی Backup مرتبط یا آخرین Backup</td>
+</tr>
+<tr>
+<td><code>cleanup</code></td>
+<td>POST</td>
+<td>پاک‌سازی Archive و Metadata قدیمی</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>فرمت پاسخ</h3>
+<div class="code-card">
+<div class="code-head">
+<span>JSON</span><button class="copy-btn">کپی</button>
+</div>
+<pre><code>{
+  "ok": true,
+  "api_version": "2.0",
+  "message": "Deployment completed successfully.",
+  "data": { ... },
+  "timestamp": "..."
+}</code></pre>
+</div>
+</section><section class="doc-section" data-title="Stateها" id="states">
+<div class="section-kicker">State Machine</div>
+<h2>Stateهای Deploy</h2>
+<p>
+            هر Deploy ID یک State مستقل دارد. کلاینت هنگام قطع شدن درخواست اولیه
+            می‌تواند با Action <code>status</code> نتیجه واقعی را Poll کند.
+          </p>
+<div class="state-grid">
+<span>waiting</span><span>starting</span><span>extracting</span><span>backing_up</span><span>deploying</span><span class="ok">completed</span><span class="bad">failed</span><span class="warn">failed_rolled_back</span><span class="warn">rolled_back</span>
+</div>
+<p>
+            Stateهای میانی نشان‌دهنده مرحله فعلی هستند.
+            <code>completed</code> پایان موفق، <code>failed</code> شکست، و
+            <code>failed_rolled_back</code> یعنی Deploy Fail شده اما Rollback
+            خودکار سمت سرور موفق بوده است.
+          </p>
+</section><section class="doc-section" data-title="فایل‌های داخلی" id="storage">
+<div class="section-kicker">Server Storage</div>
+<h2>فایل‌ها و پوشه‌های داخلی</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>مسیر</th>
+<th>کاربرد</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.deploy-token</code></td>
+<td>Secret احراز هویت API</td>
+</tr>
+<tr>
+<td><code>.deploy-backups/</code></td>
+<td>Backupهای ZIP؛ حداکثر 10 عدد در نسخه فعلی</td>
+</tr>
+<tr>
+<td><code>.deploy-state/</code></td>
+<td>
+                    Stateهای Deploy ID؛ Stateهای قدیمی بعد از 14 روز پاک می‌شوند
+                  </td>
+</tr>
+<tr>
+<td><code>.deploy-staging/</code></td>
+<td>محل Extract موقت Release قبل از Publish</td>
+</tr>
+<tr>
+<td><code>.deploy.lock</code></td>
+<td>قفل جلوگیری از اجرای همزمان عملیات حساس</td>
+</tr>
+<tr>
+<td><code>.deploy-server.log</code></td>
+<td>لاگ JSON سمت سرور با Rotation</td>
+</tr>
+<tr>
+<td><code>.deploy-manifest.json</code></td>
+<td>
+                    لیست فایل‌های متعلق به Release قبلی برای Cleanup امن‌تر
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note subtle">
+            حداکثر اندازه Archive در نسخه فعلی سرور 1 GiB است.
+          </div>
+</section><section class="doc-section" data-title="امنیت" id="security">
+<div class="section-kicker">Security</div>
+<h2>نکات امنیتی</h2>
+<div class="security-grid">
+<article>
+<b>Token خارج از سورس</b>
+<p>
+                سرور فقط Token موجود در <code>.deploy-token</code> را قبول
+                می‌کند.
+              </p>
+</article>
+<article>
+<b>Secret Masking</b>
+<p>Password و Token در نمایش کانفیگ چاپ نمی‌شوند.</p>
+</article>
+<article>
+<b>SHA‑256</b>
+<p>
+                Archive محلی Digest می‌شود و سرور قبل از Publish آن را با مقدار
+                ارسال‌شده مقایسه می‌کند.
+              </p>
+</article>
+<article>
+<b>ZIP Validation</b>
+<p>
+                سرور Entryهای Archive را قبل از Extract بررسی می‌کند تا مسیرهای
+                ناامن و فایل‌های رزروشده وارد Release نشوند.
+              </p>
+</article>
+<article>
+<b>Staging</b>
+<p>
+                Archive ابتدا در پوشه موقت Extract می‌شود و بعد از Validation
+                Publish می‌شود.
+              </p>
+</article>
+<article>
+<b>Lock</b>
+<p>عملیات Deploy/Backup/Restore همزمان روی سرور قفل می‌شوند.</p>
+</article>
+</div>
+<div class="note danger">
+<b>FTP رمزگذاری‌شده نیست.</b> این انتخاب برای سازگاری بیشتر با
+            هاست‌ها انجام شده است. FTP Account را محدود به همان مسیر لازم کن،
+            Password مجزا بساز و API رهسپار را روی HTTPS نگه دار.
+          </div>
+</section><section class="doc-section" data-title="Exit Codeها" id="exit-codes">
+<div class="section-kicker">CLI Reference</div>
+<h2>Exit Codeهای مهم</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>معنی</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>آرگومان CLI ناشناخته</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Dependency موردنیاز موجود نیست</td>
+</tr>
+<tr>
+<td>11</td>
+<td>مشکل در config یا ProjectRoot</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Configuration نامعتبر یا Secret خالی</td>
+</tr>
+<tr>
+<td>13</td>
+<td>یک Deploy دیگر برای پروژه در حال اجراست</td>
+</tr>
+<tr>
+<td>20</td>
+<td>BuildFolder با ProjectRoot یکسان است</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Build command شکست خورده</td>
+</tr>
+<tr>
+<td>22</td>
+<td>BuildFolder ساخته نشده</td>
+</tr>
+<tr>
+<td>23</td>
+<td>BuildFolder خالی است</td>
+</tr>
+<tr>
+<td>30</td>
+<td>محل Archive داخل BuildFolder است</td>
+</tr>
+<tr>
+<td>31</td>
+<td>ساخت ZIP بعد از Retryها شکست خورده</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Archive محلی پیدا نشده</td>
+</tr>
+<tr>
+<td>41</td>
+<td>FTP Upload شکست خورده</td>
+</tr>
+<tr>
+<td>50</td>
+<td>نتیجه Remote Deploy قابل تأیید نیست</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Remote Deploy موفق نشده</td>
+</tr>
+<tr>
+<td>61</td>
+<td>Health Check Fail و Rollback موفق شده</td>
+</tr>
+<tr>
+<td>62</td>
+<td>Health Check و Rollback هر دو Fail شده‌اند</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Rollback دستی شکست خورده</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section class="doc-section" data-title="عیب‌یابی" id="troubleshooting">
+<div class="section-kicker">Troubleshooting</div>
+<h2>عیب‌یابی سریع</h2>
+<div class="faq">
+<details>
+<summary>FTP Upload انجام نمی‌شود</summary>
+<p>
+<code>FtpHost</code>، User، Password و
+                <code>RemotePath</code> را بررسی کن. با
+                <code>--debug</code> مسیر ریموت و مرحله شکست را ببین. خود Secret
+                چاپ نمی‌شود.
+              </p>
+</details>
+<details>
+<summary>سرور 403 FORBIDDEN می‌دهد</summary>
+<p>
+                Token کلاینت با محتوای <code>.deploy-token</code> یکی نیست یا
+                Header به سرور نمی‌رسد. Proxy/WAF هاست را هم بررسی کن.
+              </p>
+</details>
+<details>
+<summary>ZIP_EXTENSION_MISSING دریافت می‌کنم</summary>
+<p>
+                افزونه PHP ZipArchive روی هاست فعال نیست. بدون آن نسخه فعلی
+                <code>extract.php</code> اجرا نمی‌شود.
+              </p>
+</details>
+<details>
+<summary>DEPLOY_LOCKED دریافت می‌کنم</summary>
+<p>
+                یک عملیات Deploy/Backup/Restore دیگر در حال اجراست. رهسپار
+                همزمانی سمت سرور را با Lock محدود می‌کند.
+              </p>
+</details>
+<details>
+<summary>Health Check شکست می‌خورد اما سایت باز می‌شود</summary>
+<p>
+                بررسی کن HealthUrl به endpoint صحیح و بدون نیاز به Login اشاره
+                کند و Timeout مناسب باشد.
+              </p>
+</details>
+<details>
+<summary>بعد از قطع اینترنت نمی‌دانم Deploy چه شد</summary>
+<p>
+                رهسپار با همان Deploy ID، Action <code>status</code> را Poll
+                می‌کند. اگر Timeout نهایی هم رد شود، Log سمت سرور و فایل State
+                همان Deploy ID مرجع دقیق‌تر هستند.
+              </p>
+</details>
+</div>
+</section><section class="doc-section download-section" data-title="دانلودها" id="downloads">
+<div class="section-kicker">Downloads</div>
+<h2>فایل‌های رهسپار</h2>
+<div class="download-grid">
+<a download="" href="downloads/rahsepar.sh"><b>rahsepar.sh</b><span>Linux / macOS client</span></a>
+<a download="" href="downloads/rahsepar.ps1"><b>rahsepar.ps1</b><span>Windows PowerShell client</span></a>
+<a download="" href="downloads/rahsepar.cmd"><b>rahsepar.cmd</b><span>Windows launcher</span></a>
+<a download="" href="downloads/extract.php"><b>extract.php</b><span>Server endpoint</span></a>
+<a download="" href="downloads/config.example.json"><b>config.example.json</b><span>Shared config example</span></a>
+</div>
+</section><footer class="footer">
+<div>
+<b>رهسپار</b><span>از Build تا Production، یک مسیر روشن.</span>
+</div>
+<a href="#overview">بازگشت به بالا ↑</a>
+</footer></main>
+</div>
+<div class="search-modal" hidden="" id="searchModal">
+<div class="search-box">
+<div class="search-input-wrap">
+<span>⌕</span><input autocomplete="off" id="searchInput" placeholder="مثلاً rollback، config یا FTP…"/><kbd>Esc</kbd>
+</div>
+<div class="search-results" id="searchResults"></div>
+<div class="search-hint">Enter برای باز کردن · ↑↓ برای حرکت</div>
+</div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
