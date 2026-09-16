@@ -1,0 +1,20 @@
+{
+  "ProjectRoot": ".",
+  "BuildFolder": "dist",
+  "ZipFileName": "politest.ir.zip",
+  "FtpHost": "ftp.example.com",
+  "RemoteUser": "cpanel-user",
+  "FtpPassword": "",
+  "RemotePath": "public_html",
+  "ExtractScriptUrl": "https://example.com/extract.php",
+  "Token": "",
+  "HealthUrl": "https://example.com/",
+  "BuildCommand": "bun run build",
+  "UploadRetries": 3,
+  "RequestTimeoutSeconds": 300,
+  "HealthTimeoutSeconds": 20,
+  "StatusPollSeconds": 2,
+  "StatusTimeoutSeconds": 330,
+  "KeepLocalArchive": false,
+  "AllowInsecureHttp": false
+}
